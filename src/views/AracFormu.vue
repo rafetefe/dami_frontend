@@ -7,16 +7,16 @@
                 </div>             
                 <form class="w-full m-30 bg-white text-left pl-40 rounded-xl pt-16 ">
                     <label class="text-gray-800 inline-block text-xs uppercase tracking-wider font-bold mt-2 mb-4 mx-0">İSİM :</label>
-                    <input class="block w-4/5 box-border px-6 py-3 border-b-solid border-b-black border-b " type="text" required v-model="text">
+                    <input class="block w-4/5 box-border px-6 py-3 border-b-solid border-b-black border-b " type="text" required v-model="arac.isim">
 
                     <label class="text-gray-800 inline-block text-xs uppercase tracking-wider font-bold mt-2 mb-4 mx-0">SOYİSİM :</label>
-                    <input class="block w-4/5 box-border px-6 py-3 border-b-solid border-b-black border-b " type="text" required v-model="text">
+                    <input class="block w-4/5 box-border px-6 py-3 border-b-solid border-b-black border-b " type="text" required v-model="arac.soyisim">
 
                     <label class="text-gray-800 inline-block text-xs uppercase tracking-wider font-bold mt-2 mb-4 mx-0">TELEFON :</label>
-                    <input class="block w-4/5 box-border px-6 py-3 border-b-solid border-b-black border-b " type="tel" required v-model="phone">
+                    <input class="block w-4/5 box-border px-6 py-3 border-b-solid border-b-black border-b " type="tel" required v-model="arac.telefon">
 
                     <label class="text-gray-800 inline-block text-xs uppercase tracking-wider font-bold mt-2 mb-4 mx-0">ARAÇ :</label>
-                    <select class="block w-4/5 box-border  py-3 border-b-solid border-b-black border-b ">
+                    <select class="block w-4/5 box-border  py-3 border-b-solid border-b-black border-b " v-model="arac.tur">
                         <option value="minibüs">Minibüs</option>
                         <option value="otobus">Otobüs</option>
                         <option value="kamyonet">Kamyonet</option>
@@ -34,9 +34,27 @@
 </template>
 
 <script>
-export default {
-    name:'AracFormu'
-}
+import {axios} from 'axios';
+import {defineComponent} from 'vue';
+
+export default defineComponent({
+    name:'AracFormu',
+    data() {
+        return {
+            arac : {
+                isim: '',
+                soyisim: '',
+                telefon: '',
+                tur: ''
+            }
+        };
+    },
+    methods: {
+        async submit(){
+            await axios.post('/arac', this.arac);
+        }
+    }
+});
 </script>
 
 <style>
